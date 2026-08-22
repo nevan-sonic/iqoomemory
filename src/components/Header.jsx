@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Cpu, Wifi, WifiOff, Battery, ShieldCheck } from 'lucide-react';
+import { Cpu, Wifi, WifiOff, Battery, ShieldCheck, Download, Smartphone } from 'lucide-react';
 
 export function Header({ airplaneMode, setAirplaneMode }) {
   const [batteryLevel, setBatteryLevel] = useState(88);
   const [isCharging, setIsCharging] = useState(false);
+  const [deferredPrompt, setDeferredPrompt] = useState(null);
+  const [isInstalled, setIsInstalled] = useState(false);
 
   useEffect(() => {
     if ('getBattery' in navigator) {
@@ -19,7 +21,36 @@ export function Header({ airplaneMode, setAirplaneMode }) {
         });
       }).catch(() => {});
     }
+
+    // Capture PWA beforeinstallprompt event
+    const handleBeforeInstall = (e) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+    };
+
+    window.addEventListener('beforeinstallprompt', handleBeforeInstall);
+
+    if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
+      setIsInstalled(true);
+    }
+
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstall);
+    };
   }, []);
+
+  const handleInstallClick = async () => {
+    if (!deferredPrompt) {
+      alert('To install this app on your device:\n• On Chrome / Android / Edge: Click the "Install" icon in your URL address bar.\n• On iOS Safari: Tap Share -> "Add to Home Screen".');
+      return;
+    }
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    if (outcome === 'accepted') {
+      setIsInstalled(true);
+      setDeferredPrompt(null);
+    }
+  };
 
   const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
@@ -75,12 +106,25 @@ export function Header({ airplaneMode, setAirplaneMode }) {
           </div>
         </div>
 
-        {/* 100% On-Device Badge */}
-        <div className="flex items-center gap-1 bg-[#11131A] border border-white/8 px-2 py-1 rounded-full">
-          <ShieldCheck size={11} strokeWidth={2} className="text-yellow-400" />
-          <span className="text-[8px] font-bold text-slate-300 font-mono uppercase tracking-wider leading-none">
-            Local Safe
-          </span>
+        {/* Actions: Install App & Local Safe Badge */}
+        <div className="flex items-center gap-1.5">
+          {!isInstalled && (
+            <button
+              onClick={handleInstallClick}
+              className="iqoo-badge iqoo-badge-yellow !text-[8px] !px-2 !py-1 cursor-pointer flex items-center gap-1 font-mono hover:bg-yellow-300 transition-colors shadow-sm"
+              title="Install MEMORY as native Progressive Web App"
+            >
+              <Download size={9} strokeWidth={2.5} className="text-black" />
+              <span>INSTALL</span>
+            </button>
+          )}
+
+          <div className="flex items-center gap-1 bg-[#11131A] border border-white/8 px-2 py-1 rounded-full">
+            <ShieldCheck size={11} strokeWidth={2} className="text-yellow-400" />
+            <span className="text-[8px] font-bold text-slate-300 font-mono uppercase tracking-wider leading-none">
+              Local Safe
+            </span>
+          </div>
         </div>
       </div>
     </header>

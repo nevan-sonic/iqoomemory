@@ -1,12 +1,19 @@
 {
-  "name": "iQOO MEMORY - On-Device Personal Memory Layer",
+  "id": "/",
+  "name": "MEMORY | iQOO Personal Memory Layer",
   "short_name": "MEMORY",
   "description": "Your phone remembers. You just have to ask. On-device private AI memory layer for iQOO devices.",
-  "start_url": "/",
+  "start_url": "/?utm_source=pwa",
+  "scope": "/",
   "display": "standalone",
-  "background_color": "#0B0C10",
-  "theme_color": "#FCE100",
   "orientation": "portrait-primary",
+  "background_color": "#08090C",
+  "theme_color": "#FFDE00",
+  "categories": [
+    "productivity",
+    "utilities",
+    "photo"
+  ],
   "icons": [
     {
       "src": "/icon-192.png",
@@ -19,6 +26,11 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
     }
   ]
 }
