@@ -2,14 +2,16 @@
 
 <div align="center">
 
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Vercel%20Production-FFDE00?style=for-the-badge&logo=vercel&logoColor=black)](https://iqoomemory.vercel.app)
 ![iQOO Theme](https://img.shields.io/badge/iQOO-Chennai%20Hackathon%202026-FFDE00?style=for-the-badge&logoColor=08090C)
 ![Architecture](https://img.shields.io/badge/Architecture-100%25%20On--Device%20NPU-white?style=for-the-badge&logoColor=black)
 ![Privacy](https://img.shields.io/badge/Privacy-Zero%20Cloud%20Telemetry-08090C?style=for-the-badge&color=FFDE00)
-![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)
 
 **"YOUR PHONE REMEMBERS. YOU JUST HAVE TO ASK."**
 
 *A zero-telemetry, on-device semantic memory engine engineered for iQOO OriginOS.*
+
+**🌐 Live Demo:** [https://iqoomemory.vercel.app](https://iqoomemory.vercel.app)
 
 </div>
 
